@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Accessibility for Bilibili Web
 // @namespace https://www.viyf.org
-// @version 0.1
+// @version 0.1.1
 // @description Bilibili 可访问性优化。
 // @author ABitGlow
 // @match        https://www.bilibili.com/*
@@ -10,6 +10,7 @@
 
 /** 被扫除的障碍清单
  * “点赞”、“投币”、“收藏”、“分享” 按钮缺乏键盘操作能力；
+ * “搜索” 按钮无可访问性文字描述；
  * 弹幕、 CC 字幕没有添加 ARIA Live Region 相关属性；
  * “弹幕” 开关无可访问性文字描述；
  * “发送” 弹幕按钮无键盘聚焦能力；
@@ -46,6 +47,20 @@
     }
 
     setTimeout(processLoadedHTML, 1000);
+
+    /* 处理搜索按钮。 */
+    (function () {
+        var countdown = 10;
+        var intervalID = setInterval(function () {
+            if (setElementAttribute('#nav_searchform > div > button', 'aria-label', '搜索') > 0) {
+                clearInterval(intervalID);
+            }
+            if (countdown < 1) {
+                clearInterval(intervalID);
+            }
+            countdown--;
+        }, 1000);
+    })();
 
     /* 处理播放器组件。 */
     function processPlayer() {
