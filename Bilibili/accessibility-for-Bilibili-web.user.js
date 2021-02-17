@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Accessibility for Bilibili Web
 // @namespace https://www.viyf.org
-// @version 0.1.1
+// @version 0.1.2
 // @description Bilibili 可访问性优化。
 // @author ABitGlow
 // @match        https://www.bilibili.com/*
@@ -81,8 +81,8 @@
     var callback = function (mutationsList, observer) {
         if (lockPlayer === false) {
             lockPlayer = true;
-            processPlayer();
             setTimeout(function () {
+                processPlayer();
                 lockPlayer = false;
             }, 1000);
         }
