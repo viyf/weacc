@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Accessibility for Bilibili Web
 // @namespace https://www.viyf.org
-// @version 0.1.2
+// @version 0.1.3
 // @description Bilibili 可访问性优化。
 // @author ABitGlow
 // @match        https://www.bilibili.com/*
@@ -14,6 +14,7 @@
  * 弹幕、 CC 字幕没有添加 ARIA Live Region 相关属性；
  * “弹幕” 开关无可访问性文字描述；
  * “发送” 弹幕按钮无键盘聚焦能力；
+ * 当播放器组件加载完成后 “播放”/“暂停” 按钮没有获取焦点；
  */
 
 (function () {
@@ -69,6 +70,12 @@
         setElementAttribute('div.bui-button', 'role', 'button');
         setElementAttribute('div.bui-button', 'tabindex', '0');
         setElementAttribute('div.bilibili-player-video-danmaku-switch > input', 'aria-label', '弹幕');
+
+        /* 播放器加载完成后让 “播放/暂停” 按钮获取焦点。 */
+        var btnElement = document.querySelector('div.bilibili-player-video-btn.bilibili-player-video-btn-start > button');
+        if (btnElement) {
+            btnElement.focus();
+        }
     }
 
     /* 给播放器组件添加观察器。 */
