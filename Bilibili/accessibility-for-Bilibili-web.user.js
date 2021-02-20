@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Accessibility for Bilibili Web
 // @namespace https://www.viyf.org
-// @version 0.1.3
+// @version 0.1.4
 // @description Bilibili 可访问性优化。
 // @author ABitGlow
 // @match        https://www.bilibili.com/*
@@ -79,20 +79,17 @@
     }
 
     /* 给播放器组件添加观察器。 */
-    var lockPlayer = false;
     var elementToObserve = document.getElementById('bilibili-player');
     var config = {
         childList: true,
         subtree: true
     };
     var callback = function (mutationsList, observer) {
-        if (lockPlayer === false) {
-            lockPlayer = true;
-            setTimeout(function () {
+        mutationsList.forEach(function (record) {
+            if (record.target.classList.contains('bilibili-player-video-wrap')) {
                 processPlayer();
-                lockPlayer = false;
-            }, 1000);
-        }
+            }
+        });
     };
     var observer = new MutationObserver(callback);
     observer.observe(elementToObserve, config);
