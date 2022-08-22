@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name Accessibility for Bilibili Web
 // @namespace https://www.viyf.org
-// @version 0.1.5
+// @version 0.1.4
 // @description Bilibili 可访问性优化。
 // @author ABitGlow
 // @match        https://www.bilibili.com/*
@@ -11,9 +11,9 @@
 /** 被扫除的障碍清单
  * “点赞”、“投币”、“收藏”、“分享” 按钮缺乏键盘操作能力；
  * “搜索” 按钮无可访问性文字描述；
- * 弹幕、 CC 字幕没有添加 ARIA Live Region 相关属性（Bilibili Web 端已修复）；
- * “弹幕” 开关无可访问性文字描述（Bilibili Web 端已修复）；
- * “发送” 弹幕按钮无键盘聚焦能力（Bilibili Web 端已修复）；
+ * 弹幕、 CC 字幕没有添加 ARIA Live Region 相关属性；
+ * “弹幕” 开关无可访问性文字描述；
+ * “发送” 弹幕按钮无键盘聚焦能力；
  * 当播放器组件加载完成后 “播放”/“暂停” 按钮没有获取焦点；
  */
 
@@ -65,13 +65,11 @@
 
     /* 处理播放器组件。 */
     function processPlayer() {
-        /* 由于 Bilibili Web 端已修复下面的问题，故注释掉。
         setElementAttribute('div.subtitle-wrap, div.bilibili-player-video-danmaku', 'aria-live', 'polite');
         setElementAttribute('div.bilibili-player-video-danmaku', 'aria-live', 'polite');
         setElementAttribute('div.bui-button', 'role', 'button');
         setElementAttribute('div.bui-button', 'tabindex', '0');
         setElementAttribute('div.bilibili-player-video-danmaku-switch > input', 'aria-label', '弹幕');
-        */
 
         /* 播放器加载完成后让 “播放/暂停” 按钮获取焦点。 */
         var btnElement = document.querySelector('div.bilibili-player-video-btn.bilibili-player-video-btn-start > button');
